@@ -13,7 +13,7 @@ function PermissionInterface.banId( steam, time, reason, admin )
 	elseif ulx then
 		ulx.banid( admin, steam, time, reason )
 	elseif sam then
-		sam.player.ban_id( ply, time, reason, IsValid(admin) and admin:SteamID() )
+		sam.player.ban_id( steam, time, reason, IsValid(admin) and admin:SteamID() )
 	end
 end
 
@@ -43,7 +43,7 @@ end
 function PermissionInterface.printIfPermission( permission, fmtstring, ... )
 	local message = string.format( fmtstring, ... )
 	for k, v in pairs( player.GetAll( ) ) do
-		if PermissionInterface.query( permission, v ) then
+		if PermissionInterface.query( v, permission ) then
 			v:PrintMessage( HUD_PRINTTALK, message )
 		end
 	end

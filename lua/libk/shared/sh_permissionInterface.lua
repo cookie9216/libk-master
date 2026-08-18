@@ -52,7 +52,7 @@ function PermissionInterface.getRanks( )
 	local ranks = { } --internalName: string, title: string
 	if ULib then
 		for internalName, rankInfo in pairs( ULib.ucl.groups ) do
-			if v != ULib.ACCESS_ALL then
+			if internalName != ULib.ACCESS_ALL then
 				table.insert( ranks, { internalName = internalName, title = internalName } )
 			end
 		end
