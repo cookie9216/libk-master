@@ -1,0 +1,6 @@
+{
+  "title": "LibK",
+  "type": "ServerContent",
+  "tags": ["fun"],
+  "ignore": ["*.md", ".git*", ".vscode/*", "*.psd"]
+}
