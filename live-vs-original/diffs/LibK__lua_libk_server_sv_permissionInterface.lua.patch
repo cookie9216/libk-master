@@ -1,0 +1,22 @@
+--- /tmp/tmp.43tZj6uoTj/lua/libk/server/sv_permissionInterface.lua	2023-12-04 12:02:22.000000000 +0000
++++ /home/cookie/gmod/serverfiles/garrysmod/addons/0020_libk-master/lua/libk/server/sv_permissionInterface.lua	2026-08-18 16:45:35.768549315 +0000
+@@ -13,7 +13,8 @@
+ 	elseif ulx then
+ 		ulx.banid( admin, steam, time, reason )
+ 	elseif sam then
+-		sam.player.ban_id( ply, time, reason, IsValid(admin) and admin:SteamID() )
++		-- change by cookie9216
++		sam.player.ban_id( steam, time, reason, IsValid(admin) and admin:SteamID() )
+ 	end
+ end
+ 
+@@ -43,7 +44,8 @@
+ function PermissionInterface.printIfPermission( permission, fmtstring, ... )
+ 	local message = string.format( fmtstring, ... )
+ 	for k, v in pairs( player.GetAll( ) ) do
+-		if PermissionInterface.query( permission, v ) then
++		-- change by cookie9216
++		if PermissionInterface.query( v, permission ) then
+ 			v:PrintMessage( HUD_PRINTTALK, message )
+ 		end
+ 	end

@@ -1,0 +1,12 @@
+--- /tmp/tmp.43tZj6uoTj/lua/libk/shared/sh_permissionInterface.lua	2023-12-04 12:02:22.000000000 +0000
++++ /home/cookie/gmod/serverfiles/garrysmod/addons/0020_libk-master/lua/libk/shared/sh_permissionInterface.lua	2026-08-18 16:45:35.769549410 +0000
+@@ -52,7 +52,8 @@
+ 	local ranks = { } --internalName: string, title: string
+ 	if ULib then
+ 		for internalName, rankInfo in pairs( ULib.ucl.groups ) do
+-			if v != ULib.ACCESS_ALL then
++			-- change by cookie9216
++			if internalName != ULib.ACCESS_ALL then
+ 				table.insert( ranks, { internalName = internalName, title = internalName } )
+ 			end
+ 		end

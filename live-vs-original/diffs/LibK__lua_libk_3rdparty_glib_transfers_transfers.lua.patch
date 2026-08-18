@@ -1,0 +1,18 @@
+--- /tmp/tmp.43tZj6uoTj/lua/libk/3rdparty/glib/transfers/transfers.lua	2023-12-04 12:02:22.000000000 +0000
++++ /home/cookie/gmod/serverfiles/garrysmod/addons/0020_libk-master/lua/libk/3rdparty/glib/transfers/transfers.lua	2026-08-18 16:45:35.744547042 +0000
+@@ -222,10 +222,14 @@
+ 			end
+ 		end
+ 
++		-- change by cookie9216
++		local activeByUser = {}
+ 		for _, outboundTransfer in pairs (GLib.Transfers.OutboundTransfers) do
+ 			if not outboundTransfer:IsDestinationValid () then
+ 				GLib.Transfers.OutboundTransfers [outboundTransfer:GetDestinationId () .. "/" .. outboundTransfer:GetId ()] = nil
+-			else
++			elseif not activeByUser [outboundTransfer:GetDestinationId ()] then
++				-- change by cookie9216
++				activeByUser [outboundTransfer:GetDestinationId ()] = true
+ 				local outBuffer = GLib.StringOutBuffer ()
+ 
+ 				local packet = vnet.CreatePacket("glib_transfer")

@@ -1,0 +1,9 @@
+--- /dev/null	2026-07-26 21:39:19.787270199 +0000
++++ /home/cookie/gmod/serverfiles/garrysmod/addons/0020_libk-master/addon.json	2026-08-14 12:16:57.641469986 +0000
+@@ -0,0 +1,6 @@
++{
++  "title": "LibK",
++  "type": "ServerContent",
++  "tags": ["fun"],
++  "ignore": ["*.md", ".git*", ".vscode/*", "*.psd"]
++}

@@ -1,0 +1,8 @@
+--- /tmp/tmp.43tZj6uoTj/lua/libk/shared/sh_thirdparty.lua	2023-12-04 12:02:22.000000000 +0000
++++ /home/cookie/gmod/serverfiles/garrysmod/addons/0020_libk-master/lua/libk/shared/sh_thirdparty.lua	2026-08-18 16:45:35.768549315 +0000
+@@ -187,4 +187,4 @@
+ LibK.loadThirdparty( "version", "kikito", "libk/3rdparty", "", "semver.lua" )
+ AddCSLuaFile( "libk/3rdparty/semver.lua" )
+ 
+-print("LibK uses vnet by vercas (Copyright 2014 Alexandru-Mihai Maftei), MIT licensed")
++-- change by cookie9216

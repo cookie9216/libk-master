@@ -1,0 +1,20 @@
+--- /tmp/tmp.43tZj6uoTj/lua/libk/client/cl_libk_baseView.lua	2023-12-04 12:02:22.000000000 +0000
++++ /home/cookie/gmod/serverfiles/garrysmod/addons/0020_libk-master/lua/libk/client/cl_libk_baseView.lua	2026-08-18 16:45:35.737546379 +0000
+@@ -131,7 +131,7 @@
+ 		packet:Table( {...} )
+ 	packet:AddServer( )
+ 	packet:Send( )
+-	dp("send ", strAction)
++	-- change by cookie9216
+ end
+ 
+ function BaseView:controllerTransaction( strAction, ... )
+@@ -148,7 +148,7 @@
+ 		packet:Table( { ... } )
+ 	packet:AddServer( )
+ 	packet:Send( )
+-	dp("send ", strAction)
++	-- change by cookie9216
+ 	
+ 	return def:Promise( )
+ end

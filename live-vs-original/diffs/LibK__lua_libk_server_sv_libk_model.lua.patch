@@ -1,0 +1,67 @@
+--- /tmp/tmp.43tZj6uoTj/lua/libk/server/sv_libk_model.lua	2023-12-04 12:02:22.000000000 +0000
++++ /home/cookie/gmod/serverfiles/garrysmod/addons/0020_libk-master/lua/libk/server/sv_libk_model.lua	2026-08-18 16:45:35.768549315 +0000
+@@ -5,6 +5,13 @@
+ 	if not DATABASES[db] then
+ 		KLogf( 2, "Odd Error in DB, invalid database %s", db )
+ 		debug.Trace( )
++		-- change by cookie9216
++		local def = Deferred and Deferred() or nil
++		if def and def.Reject then
++			def:Reject( -2, "Database " .. tostring( db ) .. " has not been initialized" )
++			return def:Promise()
++		end
++		return
+ 	end
+ 	return DATABASES[db].Query( ... )
+ end
+@@ -13,9 +20,13 @@
+ 	if not db or not str then
+ 		KLogf( 2, "Odd Error in DB Escape, connection dead? %s, %s", not db and "No DB" or "DB", not str and "NO String" or "String" )
+ 		debug.Trace( )
++		-- change by cookie9216
++		error( "LibK escape: missing database or string" )
+ 	end
+ 	if not DATABASES[db] then
+ 		KLogf( 2, "Odd Error in DB, invalid database %s", db )
++		-- change by cookie9216
++		error( "LibK escape: database has not been initialized: " .. tostring( db ) )
+ 	end
+ 	return DATABASES[db].SQLStr( str )
+ end
+@@ -69,7 +80,24 @@
+ 	end
+ 	local database = DATABASES[class.DB]
+ 	if not database then
+-		return Promise.Reject( -2, "Database " .. class.DB .. " has not been initialized" )
++		-- change by cookie9216
++		local def = Deferred()
++		local timerName = "LibK_WaitDB_" .. tostring(class.name)
++		local tries = 0
++		timer.Create(timerName, 0.25, 40, function()
++			tries = tries + 1
++			if DATABASES[class.DB] then
++				timer.Remove(timerName)
++				initializeTable(class)
++					:Done(function(...) def:Resolve(...) end)
++					:Fail(function(...) def:Reject(...) end)
++			elseif tries >= 40 then
++				timer.Remove(timerName)
++				KLogf( 2, "Database %s was not initialized after waiting for model %s", tostring(class.DB), tostring(class.name) )
++				def:Reject(-2, "Database " .. class.DB .. " has not been initialized")
++			end
++		end)
++		return def:Promise()
+ 	end
+ 
+ 	local sqlStr, modelsRequired = class.static.getCreateTableStatement( DATABASES[class.DB].CONNECTED_TO_MYSQL )
+@@ -195,6 +223,10 @@
+ 			class.static.model.fields[fieldname] == "time" then
+ 
+ 			local db = DATABASES[class.DB]
++			-- change by cookie9216
++			if not db then
++				return string.format( "`%s`.`%s` AS `%s.%s`", tableNameOverride, fieldname, alias, fieldname )
++			end
+ 			if db.CONNECTED_TO_MYSQL then
+ 				return string.format( "UNIX_TIMESTAMP( `%s`.`%s` ) AS `%s.%s`",
+ 					tableNameOverride,

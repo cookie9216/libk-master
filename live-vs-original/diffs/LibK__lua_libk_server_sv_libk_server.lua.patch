@@ -1,0 +1,23 @@
+--- /tmp/tmp.43tZj6uoTj/lua/libk/server/sv_libk_server.lua	2023-12-04 12:02:22.000000000 +0000
++++ /home/cookie/gmod/serverfiles/garrysmod/addons/0020_libk-master/lua/libk/server/sv_libk_server.lua	2026-08-18 16:45:35.767549220 +0000
+@@ -8,12 +8,18 @@
+ --Used to ensure something runs after Initialize
+ LibK.InitializePromise = Deferred( )
+ hook.Add( "Initialize", "LibK_Initialize", function( )
+-	LibK.InitializePromise:Resolve( )
++	-- change by cookie9216
++	if getPromiseState( LibK.InitializePromise ) == "pending" then
++		LibK.InitializePromise:Resolve( )
++	end
+ end )
+ 
+ LibK.InitPostEntityPromise = Deferred( )
+ hook.Add( "InitPostEntity", "LibK_InitPostEntity", function( )
+-	LibK.InitPostEntityPromise:Resolve( )
++	-- change by cookie9216
++	if getPromiseState( LibK.InitPostEntityPromise ) == "pending" then
++		LibK.InitPostEntityPromise:Resolve( )
++	end
+ end )
+ hook.Add( "OnReloaded", "LibK_InitPostEntity", function()
+ 	if getPromiseState(LibK.InitPostEntityPromise) == "pending" then
